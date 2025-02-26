@@ -1,0 +1,85 @@
+@import "./variable/variable";
+@import "./base/base";
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #ff9a9e, #fad0c4);
+    margin: 0;
+    padding: 20px;
+    color: $text-color;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+h1, h2 {
+    color: $primary-color;
+    text-align: center;
+}
+
+select {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid $border-color;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+button {
+    background: linear-gradient(to right, $primary-color, $accent-color);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+
+    &:hover {
+        background: linear-gradient(to right, darken($primary-color, 10%), darken($accent-color, 10%));
+    }
+}
+
+#product-list div {
+    border: 1px solid $border-color;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff3e0;
+    border-radius: 5px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: #e3f2fd;
+    border-radius: 5px;
+
+    th, td {
+        border: 1px solid $border-color;
+        padding: 10px;
+        text-align: center;
+    }
+
+    th {
+        background: $primary-color;
+        color: white;
+    }
+}
+
+#total-price {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+    color: $accent-color;
+    text-align: right;
+}

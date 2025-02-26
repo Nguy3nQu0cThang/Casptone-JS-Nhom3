@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Capstone JS Nhóm 3</title>
+    <link rel="stylesheet" href="./assets/css/index.css" />
+
+    <!-- font  -->
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com
+"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&display=swap
+"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+      integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Danh sách sản phẩm</h1>
+      <select id="filter" onchange="filterProducts()">
+        <option value="all">Tất cả</option>
+        <option value="samsung">Samsung</option>
+        <option value="iphone">iPhone</option>
+      </select>
+      <div id="product-list"></div>
+
+      <h2>Giỏ hàng</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Sản phẩm</th>
+            <th>Giá</th>
+            <th>Số lượng</th>
+            <th>Thành tiền</th>
+            <th>Hành động</th>
+          </tr>
+        </thead>
+        <tbody id="cart"></tbody>
+      </table>
+      <p id="total-price">Tổng tiền: 0 VND</p>
+      <button onclick="checkout()">Thanh toán</button>
+    </div>
+
+    
+  </body>
+</html>
