@@ -1,0 +1,169 @@
+$primary-color: #4CAF50;
+$secondary-color: #f8f9fa;
+$accent-color: #ff9800;
+$text-color: #333;
+$border-color: #ddd;
+//màu sắc của web
+$primary-300: #2a73dd;
+$primary-200: #2196f3;
+$primary-100: #f5f9fe;
+$dark: black;
+$white: white;
+$yellow: #f5d015;
+//màu chữ (text-color)
+$text-primary-300: $primary-300;
+$text-primary-200: $primary-200;
+$text-primary-100: $primary-100;
+$text-dark: $dark;
+$text-white: $white;
+//màu background
+$bg-primary-300: $primary-300;
+$bg-primary-200: $primary-200;
+$bg-primary-100: $primary-100;
+$bg-white: $white;
+$bg-dark:$dark;
+
+//sizing: (font-size..)
+$text-base: 1rem;
+$text-xl: 1.125rem;
+$text-2xl: 1.25rem;
+$text-3xl: 1.875rem;
+$text-4xl: 2.5rem;
+$text-5xl: 3.125rem;
+$text-6xl: 3.75rem;
+$text-7xl: 4.375rem;
+
+$fw-light: 300;
+$fw-normal: 400;
+$fw-semi: 600;
+$fw-bold: 700;
+
+//margin
+$m-0: 0;
+$m-1: 0.25rem;
+$m-2: 0.5rem;
+$m-3: 0.75rem;
+$m-4: 1rem;
+$m-5: 1.25rem;
+$m-6: 1.5rem;
+$m-7: 1.75rem;
+$m-8: 2rem;
+$m-9: 2.25rem;
+
+//padding
+$p-0: 0;
+$p-1: 0.25rem;
+$p-2: 0.5rem;
+$p-3: 0.75rem;
+$p-4: 1rem;
+$p-5: 1.25rem;
+$p-6: 1.5rem;
+$p-7: 1.75rem;
+$p-8: 2rem;
+$p-9: 2.25rem;
+
+//mixin:tương tự hàm tuy nhiên k có xử lý return
+@mixin mText($fs: $text-base, $c: $text-dark, $fw: $fw-normal) {
+  font-size: $fs;
+  color: $c;
+  font-weight: $fw;
+}
+
+@mixin mBtn($fs, $fw, $c, $bg, $pd, $bd, $br, $bg-hover, $c-hover) {
+  @include mText($fs, $c, $fw);
+  background: $bg;
+  padding: $pd;
+  border: $bd;
+  border-radius: $br;
+  transition: all 0.5s;
+  &:hover {
+    color: $c-hover;
+    background: $bg-hover;
+  }
+}
+
+@mixin mBtnShop($fs, $fw, $c, $bg, $pd, $bd, $br) {
+  @include mText($fs, $c, $fw);
+  background: $bg;
+  padding: $pd;
+  border: $bd;
+  border-radius: $br;
+  transition: all 0.5s;
+  &:hover {
+    opacity: 0.75;
+  }
+}
+
+// $m-0:0;
+// $m-1:0.25rem;
+// $m-2:0.5rem;
+// $m-3:0.75rem;
+// $m-4:1rem;
+// $m-5:1.25rem;
+// $m-6:1.5rem;
+// $m-7:1.75rem;
+// $m-8:2rem;
+// $m-9:2.25rem;
+//tạo ra các class margin
+$list-size: 0rem, 0.25rem, 0.5rem, 0.75rem, 1rem, 1.25rem;
+//           0       1      2
+
+$i: 0;
+@each $size in $list-size {
+  .mt-#{$i} {
+    margin-top: $size;
+  }
+  .mb-#{$i} {
+    margin-bottom: $size;
+  }
+  .ml-#{$i} {
+    margin-left: $size;
+  }
+  .mr-#{$i} {
+    margin-right: $size;
+  }
+  .mx-#{$i} {
+    margin-left: $size;
+    margin-right: $size;
+  }
+  .my-#{$i} {
+    margin-top: $size;
+    margin-bottom: $size;
+  }
+  .py-#{$i}{
+    padding-top: $size;
+    padding-bottom: $size;
+  }
+  $i: $i + 1;
+}
+
+$list-color: (
+  "primary-300": #2a73dd,
+  "primary-200": #2196f3,
+  "primary-100": #f5f9fe,
+);
+@each $key, $value in $list-color {
+.text-#{$key}{
+    color:#{$value};
+}
+.bg-#{$key}{
+    background:#{$value};
+}
+}
+
+@each $key, $value in $list-color {
+  .btn-outline-#{$key} {
+    @include mBtn(
+      $text-base,
+      $fw-semi,
+      $value,
+      $bg-white,
+      13.5px 44px,
+      1px solid $value,
+      5px,
+      linear-gradient(120deg, #60a4f4, #2a73dd),
+      $text-white
+    );
+    box-shadow: -4px 4px 33px 0px rgba(135, 129, 129, 0.75);
+  }
+}
