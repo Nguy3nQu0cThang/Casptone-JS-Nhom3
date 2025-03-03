@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Quản Trị</title>
+    <link rel="stylesheet" href="./assets/css/admin.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Quản lý sản phẩm</h1>
+        
+        <!-- Form thêm sản phẩm -->
+        <h2>Thêm sản phẩm</h2>
+        <form id="addProductForm">
+            <input type="text" id="productName" placeholder="Tên sản phẩm" required>
+            <input type="text" id="productImage" placeholder="URL hình ảnh" required>
+            <input type="number" id="productPrice" placeholder="Giá sản phẩm" required>
+            <input type="text" id="productScreen" placeholder="Màn hình" required>
+            <input type="text" id="productBackCamera" placeholder="Camera sau" required>
+            <input type="text" id="productFrontCamera" placeholder="Camera trước" required>
+            
+            <select id="productType">
+                <option value="samsung">Samsung</option>
+                <option value="iphone">iPhone</option>
+            </select>
+            <textarea id="productDesc" placeholder="Mô tả sản phẩm" required></textarea>
+            <button type="submit">Thêm sản phẩm</button>
+        </form>
+
+
+        <!-- Danh sách sản phẩm -->
+        <h2>Danh sách sản phẩm</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Hình ảnh</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Giá</th>
+                    <th>Màn hình</th>
+                    <th>Camera Sau</th>
+                    <th>Camera Trước</th>
+                    <th>Loại</th>
+                    <th>Mô tả</th>
+                </tr>
+            </thead>
+            <tbody id="adminProductList"></tbody>
+        </table>
+    </div>
+
+    <script src="../controllers/admin.js"></script>
+</body>
+</html>
