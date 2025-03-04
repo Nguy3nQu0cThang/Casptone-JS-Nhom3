@@ -100,5 +100,39 @@ window.capNhatSanPham = async function (id) {
   }
 };
 
+// Hàm tìm kiếm sản phẩm
+document.getElementById("searchInput").addEventListener("input", function () {
+  let searchValue = this.value.toLowerCase().trim();
+  let productRows = document.querySelectorAll("#adminProductList tr");
+  
+  productRows.forEach(row => {
+      let productName = row.querySelector("td:nth-child(3)")?.textContent.toLowerCase();
+      if (productName.includes(searchValue)) {
+          row.style.display = "";
+      } else {
+          row.style.display = "none";
+      }
+  });
+})
+
+// Hàm sắp xếp sản phẩm theo giá
+document.getElementById("sortPriceBtn").addEventListener("click", function () {
+  let productRows = Array.from(document.querySelectorAll("#adminProductList tr"));
+  let ascending = this.getAttribute("data-asc") === "true";
+  
+  productRows.sort((a, b) => {
+      let priceA = parseFloat(a.querySelector("td:nth-child(4)")?.textContent) || 0;
+      let priceB = parseFloat(b.querySelector("td:nth-child(4)")?.textContent) || 0;
+      return ascending ? priceA - priceB : priceB - priceA;
+  });
+  
+  let tbody = document.getElementById("adminProductList");
+  tbody.innerHTML = "";
+  productRows.forEach(row => tbody.appendChild(row));
+  
+  this.setAttribute("data-asc", !ascending);
+  this.textContent = ascending ? "Sắp xếp: Giá giảm dần" : "Sắp xếp: Giá tăng dần";
+});
+
 // Gọi API khi trang load
 fetchAdminProducts();
