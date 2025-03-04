@@ -1,55 +1,115 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Trang Quản Trị</title>
-    <link rel="stylesheet" href="./assets/css/admin.css">
+    <link rel="stylesheet" href="./assets/css/admin.css" />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-</head>
-<body>
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
     <div class="container">
-        <h1>Quản lý sản phẩm</h1>
-        
-        <!-- Form thêm sản phẩm -->
-        <h2>Thêm sản phẩm</h2>
-        <form id="addProductForm">
-            <input type="text" id="productName" placeholder="Tên sản phẩm" required>
-            <input type="text" id="productImage" placeholder="URL hình ảnh" required>
-            <input type="number" id="productPrice" placeholder="Giá sản phẩm" required>
-            <input type="text" id="productScreen" placeholder="Màn hình" required>
-            <input type="text" id="productBackCamera" placeholder="Camera sau" required>
-            <input type="text" id="productFrontCamera" placeholder="Camera trước" required>
-            
-            <select id="productType">
-                <option value="samsung">Samsung</option>
-                <option value="iphone">iPhone</option>
-            </select>
-            <textarea id="productDesc" placeholder="Mô tả sản phẩm" required></textarea>
-            <button type="submit">Thêm sản phẩm</button>
-        </form>
+      <h1>Quản lý sản phẩm</h1>
 
+      <!-- Form thêm sản phẩm -->
+      <h2>Thêm sản phẩm</h2>
+      <form id="addProductForm">
+        <input
+          type="text"
+          id="productName"
+          class="form-control"
+          placeholder="Tên sản phẩm"
+        />
+        <p class="text text-danger" id="err_required_productName"></p>
+        <input
+          type="text"
+          id="productImage"
+          class="form-control"
+          placeholder="URL hình ảnh"
+        />
+        <p class="text text-danger" id="err_required_productImage"></p>
+        <input
+          type="number"
+          id="productPrice"
+          class="form-control"
+          placeholder="Giá sản phẩm"
+        />
+        <p class="text text-danger" id="err_required_productPrice"></p>
+        <input
+          type="text"
+          id="productScreen"
+          class="form-control"
+          placeholder="Màn hình"
+        />
+        <p class="text text-danger" id="err_required_productScreen"></p>
+        <input
+          type="text"
+          id="productBackCamera"
+          class="form-control"
+          placeholder="Camera sau"
+        />
+        <p class="text text-danger" id="err_required_productBackCamera"></p>
+        <input
+          type="text"
+          id="productFrontCamera"
+          class="form-control"
+          placeholder="Camera trước"
+        />
+        <p class="text text-danger" id="err_required_productFrontCamera"></p>
+        <select id="productType" class="form-control">
+          <option value="samsung">Samsung</option>
+          <option value="iphone">iPhone</option>
+        </select>
+        <p class="text text-danger" id="err_required_productType"></p>
+        <textarea
+          id="productDesc"
+          class="form-control"
+          placeholder="Mô tả sản phẩm(optional)"
+        ></textarea>
+        <button type="submit">Thêm sản phẩm</button>
+      </form>
 
-        <!-- Danh sách sản phẩm -->
-        <h2>Danh sách sản phẩm</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Hình ảnh</th>
-                    <th>Tên sản phẩm</th>
-                    <th>Giá</th>
-                    <th>Màn hình</th>
-                    <th>Camera Sau</th>
-                    <th>Camera Trước</th>
-                    <th>Loại</th>
-                    <th>Mô tả</th>
-                </tr>
-            </thead>
-            <tbody id="adminProductList"></tbody>
-        </table>
+      <!-- Danh sách sản phẩm -->
+      <h2>Danh sách sản phẩm</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Hình ảnh</th>
+            <th>Tên sản phẩm</th>
+            <th>Giá</th>
+            <th>Màn hình</th>
+            <th>Camera Sau</th>
+            <th>Camera Trước</th>
+            <th>Loại</th>
+            <th>Mô tả</th>
+            <th><em class="fa fa-cog"></em></th>
+          </tr>
+        </thead>
+        <tbody id="adminProductList"></tbody>
+      </table>
     </div>
 
-    <script src="../controllers/admin.js"></script>
-</body>
+    <!-- axios -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.8/axios.min.js"
+      integrity="sha512-v8+bPcpk4Sj7CKB11+gK/FnsbgQ15jTwZamnBf/xDmiQDcgOIYufBo6Acu1y30vrk8gg5su4x0CG3zfPaq5Fcg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+    <script type="module" src="../controllers/admin.js"></script>
+  </body>
 </html>

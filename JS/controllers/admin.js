@@ -1,4 +1,6 @@
-const API_URL = "https://67b733482bddacfb270e154a.mockapi.io/Product";
+import { kiemTraRong } from "../assets/utils/validation.js";
+
+const API_URL = "https://67b733482bddacfb270e154a.mockapi.io/Product/";
 
 // Lấy danh sách sản phẩm
 async function fetchAdminProducts() {
@@ -27,6 +29,10 @@ function renderAdminProducts(products) {
       <td>${product.frontCamera}</td>
       <td>${product.type}</td>
       <td>${product.desc}</td>
+      <td>
+              <button class="btn btn-primary" onclick="capNhatSanPham('${product.id}')">Chỉnh sửa</button>
+              <button class="btn btn-danger" onclick="xoaSanPham('${product.id}')">Xóa</button>
+          </td>
     `;
     productList.appendChild(row);
   });
@@ -49,6 +55,19 @@ document
       desc: document.getElementById("productDesc").value,
     };
 
+    let { name, price, screen, backCamera, frontCamera, img, type, desc } =
+      newProduct;
+    let valid = true;
+    valid &=
+      kiemTraRong(name, "err_required_productName", "Tên") &
+      kiemTraRong(price, "err_required_productPrice", "Giá tiền") &
+      kiemTraRong(screen, "err_required_productScreen", "Màn hình") &
+      kiemTraRong(backCamera, "err_required_productBackCamera", "Camera sau") &
+      kiemTraRong(frontCamera, "err_required_productFrontCamera", "Camera trước")&
+      kiemTraRong(img, "err_required_productImage", "Ảnh")&
+      kiemTraRong(type, "err_required_productType", "Loại");
+
+    if (!valid) return;
     try {
       await axios.post(API_URL, newProduct);
       alert("Thêm sản phẩm thành công!");
@@ -57,6 +76,29 @@ document
       console.error("Lỗi khi thêm sản phẩm:", error);
     }
   });
+
+//Xóa sản phẩm
+window.xoaSanPham = async function (id) {
+  let response = await axios({
+    url: API_URL + `${id}`,
+    method: "DELETE",
+  });
+  fetchAdminProducts();
+};
+
+//Cập nhật sản phẩm
+window.capNhatSanPham = async function (id) {
+  let response = await axios({
+    url: API_URL + `${id}`,
+    method: "GET",
+  });
+  console.log(response.data);
+  let spEdit = response.data;
+  let arrInput = document.querySelectorAll("#addProductForm .form-control");
+  for (let input of arrInput) {
+    input.value = spEdit[input.id];
+  }
+};
 
 // Gọi API khi trang load
 fetchAdminProducts();
