@@ -47,6 +47,10 @@ function renderProducts(products) {
             <img src="${product.img}">
             <h3>${product.name}</h3>
             <p>Giá: ${product.price}</p>
+            <p>Màn hình: ${product.screen}</p>
+            <p>Camera trước: ${product.frontCamera}</p>
+            <p>Camera sau: ${product.backCamera}</p>
+            <p>${product.desc}</p>
             <button onclick="addToCart(${product.id})">Thêm vào giỏ</button>
         `;
     productContainer.appendChild(productDiv);
