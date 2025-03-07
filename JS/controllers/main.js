@@ -44,7 +44,7 @@ function renderProducts(products) {
     let productDiv = document.createElement("div");
     productDiv.classList.add("product-item");
     productDiv.innerHTML = `
-            <img src="${product.img}">
+            <img src="${product.img}" class="img-fluid">
             <h3>${product.name}</h3>
             <p>Giá: ${product.price}</p>
             <p>Màn hình: ${product.screen}</p>
@@ -106,7 +106,7 @@ function renderCart() {
   });
 
   // Hiển thị tổng tiền
-  cartTotal.innerText = `${total}`;
+  cartTotal.innerText = `Tổng tiền: ${total}`;
 }
 
 //Sự kiện thay đổi số lượng sản phẩm trong giỏ hàng

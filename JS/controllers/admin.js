@@ -30,9 +30,9 @@ function renderAdminProducts(products) {
       <td>${product.type}</td>
       <td>${product.desc}</td>
       <td>
-              <button class="btn btn-primary" onclick="capNhatSanPham('${product.id}')">Chỉnh sửa</button>
-              <button class="btn btn-danger" onclick="xoaSanPham('${product.id}')">Xóa</button>
-          </td>
+          <button class="btn btn-primary" onclick="capNhatSanPham('${product.id}')">Chỉnh sửa</button>
+          <button class="btn btn-danger" onclick="xoaSanPham('${product.id}')">Xóa</button>
+      </td>
     `;
     productList.appendChild(row);
   });
@@ -44,42 +44,59 @@ document
   .addEventListener("submit", async function (e) {
     e.preventDefault();
 
+    let productId = document.getElementById("productId").value; // Lấy ID sản phẩm nếu có
+
     let newProduct = {
-      name: document.getElementById("productName").value,
-      img: document.getElementById("productImage").value,
-      price: document.getElementById("productPrice").value,
-      screen: document.getElementById("productScreen").value,
-      backCamera: document.getElementById("productBackCamera").value,
-      frontCamera: document.getElementById("productFrontCamera").value,
-      type: document.getElementById("productType").value,
-      desc: document.getElementById("productDesc").value,
+      name: document.getElementById("name").value,
+      img: document.getElementById("img").value,
+      price: document.getElementById("price").value,
+      screen: document.getElementById("screen").value,
+      backCamera: document.getElementById("backCamera").value,
+      frontCamera: document.getElementById("frontCamera").value,
+      type: document.getElementById("type").value,
+      desc: document.getElementById("desc").value,
     };
 
-    let { name, price, screen, backCamera, frontCamera, img, type, desc } =
-      newProduct;
-    let valid = true;
-    valid &=
-      kiemTraRong(name, "err_required_productName", "Tên") &
-      kiemTraRong(price, "err_required_productPrice", "Giá tiền") &
-      kiemTraRong(screen, "err_required_productScreen", "Màn hình") &
-      kiemTraRong(backCamera, "err_required_productBackCamera", "Camera sau") &
-      kiemTraRong(
-        frontCamera,
-        "err_required_productFrontCamera",
-        "Camera trước"
-      ) &
-      kiemTraRong(img, "err_required_productImage", "Ảnh") &
-      kiemTraRong(type, "err_required_productType", "Loại");
+     let { name, price, screen, backCamera, frontCamera, img, type, desc } =
+       newProduct;
+     let valid = true;
 
-    if (!valid) return;
+     valid &=
+       kiemTraRong(name, "err_required_productName", "Tên") &
+       kiemTraRong(price, "err_required_productPrice", "Giá tiền") &
+       kiemTraRong(screen, "err_required_productScreen", "Màn hình") &
+       kiemTraRong(backCamera, "err_required_productBackCamera", "Camera sau") &
+       kiemTraRong(
+         frontCamera,
+         "err_required_productFrontCamera",
+         "Camera trước"
+       ) &
+       kiemTraRong(img, "err_required_productImage", "Ảnh") &
+       kiemTraRong(type, "err_required_productType", "Loại") &
+       kiemTraRong(desc, "err_required_productType", "Loại");
+
+     if (!valid) return;
+
     try {
-      await axios.post(API_URL, newProduct);
-      alert("Thêm sản phẩm thành công!");
+      if (productId) {
+        // Nếu có ID, thực hiện cập nhật
+        await axios.put(API_URL + productId, newProduct);
+        alert("Cập nhật sản phẩm thành công!");
+        document.getElementById("saveButton").remove(); // Xóa nút cập nhật sau khi xong
+      } else {
+        // Nếu không có ID, thêm mới sản phẩm
+        await axios.post(API_URL, newProduct);
+        alert("Thêm sản phẩm thành công!");
+      }
+
+      document.getElementById("addProductForm").reset(); // Reset form sau khi xong
+      document.getElementById("productId").value = ""; // Xóa ID để tránh cập nhật nhầm
       fetchAdminProducts(); // Cập nhật danh sách sản phẩm
     } catch (error) {
-      console.error("Lỗi khi thêm sản phẩm:", error);
+      console.error("Lỗi:", error);
     }
   });
+
 
 //Xóa sản phẩm
 window.xoaSanPham = async function (id) {
@@ -92,71 +109,57 @@ window.xoaSanPham = async function (id) {
 
 //Cập nhật sản phẩm
 window.capNhatSanPham = async function (id) {
-  let response = await axios({
-    url: API_URL + `${id}`,
-    method: "GET",
-  });
-  console.log(response.data);
+  let response = await axios.get(API_URL + id);
   let productEdit = response.data;
-  // let arrInput = document.querySelectorAll("#addProductForm .form-control");
-  let fieldMapping = {
-    productName: "name",
-    productPrice: "price",
-    productImage: "img",
-    productScreen: "screen",
-    productBackCamera: "backCamera",
-    productFrontCamera: "frontCamera",
-    productType: "type",
-    productDesc: "desc",
-  };
-  for (let inputId in fieldMapping) {
-    let fieldName = fieldMapping[inputId];
-    let inputElement = document.getElementById(inputId);
-    if (inputElement) {
-      console.log(`Gán giá trị cho ${inputId}:`, productEdit[fieldName]); // Debug
-      inputElement.value = productEdit[fieldName] ?? "";
-    }
-  }
 
-  let saveButton = document.getElementById("saveButton");
-  if (!saveButton) {
-    saveButton = document.createElement("button");
+  // Điền dữ liệu vào form
+  document.getElementById("productId").value = id; // Gán ID sản phẩm
+  document.getElementById("name").value = productEdit.name;
+  document.getElementById("img").value = productEdit.img;
+  document.getElementById("price").value = productEdit.price;
+  document.getElementById("screen").value = productEdit.screen;
+  document.getElementById("backCamera").value = productEdit.backCamera;
+  document.getElementById("frontCamera").value = productEdit.frontCamera;
+  document.getElementById("type").value = productEdit.type;
+  document.getElementById("desc").value = productEdit.desc;
+
+  // Tạo nút "Ghi chú & Cập nhật" nếu chưa có
+  if (!document.getElementById("saveButton")) {
+    let saveButton = document.createElement("button");
     saveButton.id = "saveButton";
     saveButton.textContent = "Ghi chú & Cập nhật";
     saveButton.classList.add("btn", "btn-success");
-    saveButton.onclick = function () {
-      capNhatSanPhamAPI(productId);
-    };
-
     document.getElementById("addProductForm").appendChild(saveButton);
   }
 };
 
-async function capNhatSanPhamAPI(productId) {
+
+async function capNhatSanPhamAPI(id) {
   try {
+    
       let productData = {
-          id: productId,
-          name: document.getElementById("productName").value,
-          price: document.getElementById("productPrice").value,
-          image: document.getElementById("productImage").value,
-          screen: document.getElementById("productScreen").value,
-          backCamera: document.getElementById("productBackCamera").value,
-          frontCamera: document.getElementById("productFrontCamera").value,
-          desc: document.getElementById("productDesc").value,
-          type: document.getElementById("productType").value
+          id: id,
+          name: document.getElementById("name").value,
+          img: document.getElementById("img").value,
+          price: document.getElementById("price").value,
+          screen: document.getElementById("screen").value,
+          backCamera: document.getElementById("backCamera").value,
+          frontCamera: document.getElementById("frontCamera").value,
+          type: document.getElementById("type").value,
+          desc: document.getElementById("desc").value,  
       };
 
       console.log("Gửi dữ liệu cập nhật:", productData);
 
       let response = await axios({
-          url: `https://your-api.com/products/${productId}`,
+          url: API_URL + `${id}`,
           method: "PUT",
-          headers: { "Content-Type": "application/json" },
           data: productData
       });
 
       if (response.status === 200) {
           alert("Sản phẩm đã được cập nhật thành công!");
+          fetchAdminProducts();
       } else {
           throw new Error("Cập nhật thất bại!");
       }
