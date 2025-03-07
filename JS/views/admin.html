@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Trang Quản Trị</title>
-    <link rel="stylesheet" href="./assets/css/admin.css" />
+   
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- Font Awesome -->
     <link
@@ -18,9 +18,13 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
+
+     <link rel="stylesheet" href="../assets/css/admin.css" />
   </head>
   <body>
     <div class="container">
+      <a href="/JS/views/index.html">Trang Bán Hàng</a>
+
       <h1>Quản lý sản phẩm</h1>
 
       <!-- Form thêm sản phẩm -->
@@ -28,58 +32,60 @@
       <form id="addProductForm">
         <input
           type="text"
-          id="productName"
+          id="name"
           class="form-control"
           placeholder="Tên sản phẩm"
         />
         <p class="text text-danger" id="err_required_productName"></p>
         <input
           type="text"
-          id="productImage"
+          id="img"
           class="form-control"
           placeholder="URL hình ảnh"
         />
         <p class="text text-danger" id="err_required_productImage"></p>
         <input
           type="number"
-          id="productPrice"
+          id="price"
           class="form-control"
           placeholder="Giá sản phẩm"
         />
         <p class="text text-danger" id="err_required_productPrice"></p>
         <input
           type="text"
-          id="productScreen"
+          id="screen"
           class="form-control"
           placeholder="Màn hình"
         />
         <p class="text text-danger" id="err_required_productScreen"></p>
         <input
           type="text"
-          id="productBackCamera"
+          id="backCamera"
           class="form-control"
           placeholder="Camera sau"
         />
         <p class="text text-danger" id="err_required_productBackCamera"></p>
         <input
           type="text"
-          id="productFrontCamera"
+          id="frontCamera"
           class="form-control"
           placeholder="Camera trước"
         />
         <p class="text text-danger" id="err_required_productFrontCamera"></p>
-        <select id="productType" class="form-control">
+        <select id="type" class="form-control">
           <option value="samsung">Samsung</option>
           <option value="iphone">iPhone</option>
         </select>
         <p class="text text-danger" id="err_required_productType"></p>
         <textarea
-          id="productDesc"
+          id="desc"
           class="form-control"
           placeholder="Mô tả sản phẩm(optional)"
         ></textarea>
 
         <button type="submit" class="btn btn-primary">Thêm sản phẩm</button>
+        <input type="hidden" id="productId" />
+
       </form>
 
       <!-- Ô tìm kiếm sản phẩm -->
@@ -123,7 +129,9 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
+
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+
     <script type="module" src="../controllers/admin.js"></script>
   </body>
 </html>
