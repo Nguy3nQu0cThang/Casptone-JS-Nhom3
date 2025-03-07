@@ -72,8 +72,7 @@ document
          "Camera trước"
        ) &
        kiemTraRong(img, "err_required_productImage", "Ảnh") &
-       kiemTraRong(type, "err_required_productType", "Loại") &
-       kiemTraRong(desc, "err_required_productType", "Loại");
+       kiemTraRong(type, "err_required_productType", "Loại");
 
      if (!valid) return;
 
